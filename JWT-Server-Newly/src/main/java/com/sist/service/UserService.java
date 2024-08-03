@@ -8,14 +8,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
+import com.sist.dto.JoinDTO;
 import com.sist.entity.UserEntity;
+import com.sist.jwt.CustomUserDetails;
 import com.sist.repository.MybatisUserRepository;
 
 import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
-public class userService implements UserDetailsService{
+public class UserService implements UserDetailsService{
 
 	
 	private final MybatisUserRepository mybatisUserRepository;
@@ -31,13 +32,9 @@ UserEntity account=mybatisUserRepository.findByUserName(username);
 		
 		
 		// TODO Auto-generated method stub
-		return User.builder()
-				.username(account.getUsername())
-				.password(account.getPassword())
-				.roles(account.getRole())
-				.build();
+		return new CustomUserDetails(account);
 	}
-	public String save(UserEntity entity) {
+	public String save(JoinDTO entity) {
 		String username=entity.getUsername();
 		UserEntity findUser=mybatisUserRepository.findByUserName(username);
 		if(findUser==null) {

@@ -2,6 +2,7 @@ package com.sist.jwt;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,7 +29,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter{
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException {
-		
+	
 		
 		String username=obtainUsername(request);
 		String password=obtainPassword(request);
@@ -46,10 +47,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter{
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		User customUserDetails = (User) authResult.getPrincipal();
+		CustomUserDetails customUserDetails = (CustomUserDetails) authResult.getPrincipal();
 
         String username = customUserDetails.getUsername();
-
+        
         Collection<? extends GrantedAuthority> authorities = authResult.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority auth = iterator.next();
@@ -57,7 +58,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter{
         String role = auth.getAuthority();
 
         String token = jwtUtil.createJwt(username, role, 60*60*10L);
-
+     
         response.addHeader("Authorization", "Bearer " + token);
 	}
 	@Override
