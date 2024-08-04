@@ -21,3 +21,16 @@
 > - JWT를 위한 강제 로그인 진행
 > - JWT토큰 활용 응답
 > - JWT 서버 구현
+# JWT_Advanced Study
+
+> [!NOTE]
+>
+> - 단일토큰의 위험성
+> - Refresh 토큰 발급
+> - Access토큰 만료시 응답 설정
+> - Refresh 토큰을 위한 Access 갱신
+> - Refresh Rotate
+> - 서버측 주도권 필요성
+> - 로그아웃 구현
+> - 매일 알림
+> - PKCE
